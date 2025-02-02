@@ -18,7 +18,7 @@ echo "Installing dependencies..."
 repeat_until_success apt install git golang python cmake clang -y
 
 echo "Cloning repository..."
-repeat_until_success git clone https://cdn.moran233.xyz/https://github.com/ollama/ollama.git
+repeat_until_success git clone https://hub.gitmirror.com/https://github.com/ollama/ollama.git
 
 cd ollama || { echo "Failed to change directory"; exit 1; }
 
