@@ -10,21 +10,6 @@ RESET='\033[0m'
 msg_red()   { printf "${RED}%s${RESET}\n" "$*"; }
 msg_green() { printf "${GREEN}%s${RESET}\n" "$*"; }
 
-# Parse gh_proxy from $1 if provided, e.g. gh_proxy="https://gh-proxy.com/"
-gh_proxy=""
-if [ -n "$1" ]; then
-    case "$1" in
-        gh_proxy=*)
-            gh_proxy="${1#gh_proxy=}"
-            # ensure gh_proxy ends with /
-            [ -n "$gh_proxy" ] && case "$gh_proxy" in
-                */) : ;;
-                *) gh_proxy="$gh_proxy/" ;;
-            esac
-            ;;
-    esac
-fi
-
 # Check if running on OpenWrt
 if [ ! -f /etc/openwrt_release ]; then
     msg_red "Unknown OpenWrt Version"
@@ -120,11 +105,6 @@ fi
 # Download the corresponding package archive
 PKG_FILE="$SDK-$DISTRIB_ARCH.tar.gz"
 BASE_URL="https://gh-proxy.com/https://github.com/sbwml/luci-app-mosdns/releases/latest/download/$PKG_FILE"
-if [ -n "$gh_proxy" ]; then
-    PKG_URL="${gh_proxy}${BASE_URL}"
-else
-    PKG_URL="$BASE_URL"
-fi
 
 msg_green "Downloading $PKG_URL ..."
 if ! curl --connect-timeout 5 -m 300 -kLo "$TEMP_DIR/$PKG_FILE" "$PKG_URL"; then
@@ -158,3 +138,4 @@ if [ -x "/etc/init.d/mosdns" ]; then
 fi
 
 msg_green "Done!"
+
