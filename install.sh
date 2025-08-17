@@ -49,7 +49,7 @@ fi
 
 # Create temporary directory and set up cleanup on exit
 TEMP_DIR="$(mktemp -d)"
-trap 'rm -rf "$TEMP_DIR"' EXIT
+trap 'rm -rf "${TEMP_DIR}"' EXIT
 
 # Check if the current platform is supported
 msg_green "Checking platform..."
@@ -138,4 +138,3 @@ if [ -x "/etc/init.d/mosdns" ]; then
 fi
 
 msg_green "Done!"
-
